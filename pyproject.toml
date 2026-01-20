@@ -1,12 +1,21 @@
 [project]
-name = "python-minimal-boilerplate"
+name = "pdf2md"
 version = "0.1.0"
-description = "Add your description here"
+description = "Convert PDF files to Markdown using LightOnOCR-2-1B"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.11"
 dependencies = [
     "logfire>=4.16.0",
+    "torch>=2.0.0",
+    "pillow>=10.0.0",
+    "pypdfium2>=4.0.0",
+    "rich>=13.0.0",
+    "transformers @ git+https://github.com/huggingface/transformers",
+    "torchvision>=0.24.1",
 ]
+
+[project.scripts]
+pdf2md = "pdf2md.cli:main"
 
 [dependency-groups]
 dev = [
@@ -25,3 +34,11 @@ build-backend = "uv_build"
 target-version = "py314"
 line-length = 120
 fix = true
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

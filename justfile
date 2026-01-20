@@ -2,9 +2,15 @@
 export PATH := join(justfile_directory(), ".env", "bin") + ":" + env_var('PATH')
 
 set dotenv-load
+set positional-arguments
 
 @_:
     just --list
+
+# Convert a PDF file to Markdown using LightOnOCR-2-1B (e.g., just test.pdf)
+[no-cd]
+@pdf pdf_file:
+    uv run pdf2md "$1"
 
 [group('qa')]
 test *args:
@@ -13,6 +19,10 @@ test *args:
 [group('qa')]
 lint *args:
     uv run ruff check --fix {{args}}
+
+[group('qa')]
+format *args:
+    uv run ruff format {{args}}
 
 [group('qa')]
 typing *args:
@@ -27,8 +37,9 @@ check *args:
 docs *args:
     uv run zensical build {{args}}
 
-run:
-    uv run python -m src.main
+# Run pdf2md with arguments (accepts optional leading `pdf2md`)
+run *args:
+    if [ "$#" -gt 0 ] && [ "$1" = "pdf2md" ]; then shift; fi; uv run pdf2md "$@"
 
 # Remove temporary files
 [group('lifecycle')]
