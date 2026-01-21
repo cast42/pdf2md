@@ -28,7 +28,8 @@ def get_device_and_dtype() -> tuple[str, torch.dtype]:
     elif torch.backends.mps.is_available():
         return "mps", torch.float32
     else:
-        return "cpu", torch.float32
+        # Use bfloat16 on CPU to save memory (approx 4GB for 2B model vs 8GB for float32)
+        return "cpu", torch.bfloat16
 
 
 def load_model(device: str, dtype: torch.dtype) -> tuple[LightOnOcrForConditionalGeneration, LightOnOcrProcessor]:

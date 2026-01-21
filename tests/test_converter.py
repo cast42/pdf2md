@@ -1,10 +1,43 @@
 """Tests for the pdf2md converter module."""
 
+from pathlib import Path
 from unittest.mock import patch
 
 import torch
 
-from pdf2md.converter import get_device_and_dtype
+from pdf2md.converter import convert_pdf_to_markdown, get_device_and_dtype
+
+
+class TestConversion:
+    """Integration tests for PDF conversion."""
+
+    def test_convert_simple_pdf(self, tmp_path):
+        """Should convert a simple PDF to Markdown correctly."""
+        # Locate the test data relative to the project root
+        pdf_path = Path("tests/data/test.pdf")
+        if not pdf_path.exists():
+            # If running from inside tests/ or similar, try to adjust or skip
+            # But usually tests are run from root.
+            # Fallback for some IDEs: look relative to this file
+            pdf_path = Path(__file__).parent / "data" / "test.pdf"
+
+        assert pdf_path.exists(), f"Test artifact not found at {pdf_path}"
+
+        output_path = tmp_path / "test.md"
+
+        # Run conversion
+        markdown = convert_pdf_to_markdown(pdf_path, output_path)
+
+        # Verify output file exists
+        assert output_path.exists()
+
+        # Verify content
+        expected_snippets = ["Hello World!", "test PDF"]
+        for snippet in expected_snippets:
+            assert snippet in markdown, f"Expected '{snippet}' in output markdown"
+
+        # Verify file content matches returned string
+        assert output_path.read_text(encoding="utf-8") == markdown
 
 
 class TestGetDeviceAndDtype:
@@ -45,7 +78,7 @@ class TestGetDeviceAndDtype:
     @patch("torch.cuda.is_available", return_value=False)
     @patch("torch.backends.mps.is_available", return_value=False)
     def test_cpu_fallback(self, mock_mps, mock_cuda):
-        """Should fall back to CPU when no GPU available."""
+        """Should fall back to CPU when no GPU available, using bfloat16 for memory efficiency."""
         device, dtype = get_device_and_dtype()
         assert device == "cpu"
-        assert dtype == torch.float32
+        assert dtype == torch.bfloat16
