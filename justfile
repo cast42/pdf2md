@@ -37,9 +37,9 @@ check *args:
 docs *args:
     uv run zensical build {{args}}
 
-# Run pdf2md with arguments (accepts optional leading `pdf2md`)
+# Run converts of pdf file as argument to markdown
 run *args:
-    if [ "$#" -gt 0 ] && [ "$1" = "pdf2md" ]; then shift; fi; uv run pdf2md "$@"
+    uv run pdf2md {{args}}
 
 # Remove temporary files
 [group('lifecycle')]
