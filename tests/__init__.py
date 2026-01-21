@@ -1,1 +1,1 @@
-"""Tests for pdf2md."""
+"""Test suite for pdf2md."""

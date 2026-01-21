@@ -1,17 +1,30 @@
-# Python Minimal Boilerplate
+# pdf2md
 
-Welcome to the documentation for the minimal Python boilerplate project.
+Convert PDF files to Markdown using LightOnOCR-2-1B, with a CLI wrapper and typed converter utilities.
 
 ## Overview
 
-This template ships with:
+pdf2md includes:
 
-- Dependency management via [uv](https://docs.astral.sh/uv/)
-- Automation using [`just`](https://github.com/casey/just)
+- A CLI entry point (`pdf2md`) that renders PDFs into Markdown
+- Converter utilities for model loading and OCR processing
+- Structured logging via [Pydantic Logfire](https://pydantic.dev/logfire)
 - Quality gates powered by Ruff, Ty, and pytest
-- Structured logging delivered through [Pydantic Logfire](https://pydantic.dev/logfire)
 
-## Getting Started
+## Usage
+
+Run the CLI with:
+
+```sh
+uv run pdf2md path/to/document.pdf
+```
+
+## Documentation
+
+- [API reference](reference.md) for modules, classes, and functions
+- [Tests](tests.md) for the test suite and what each test covers
+
+## Quality Gates
 
 Use the `just` recipes to lint, type-check, test, and build project documentation:
 
@@ -20,7 +33,3 @@ just check   # lint + type-check
 just test    # run the pytest suite
 just docs    # build documentation with zensical
 ```
-
-## Application Entry Point (`src/main.py`)
-
-The application's main module lives at `src/main.py`. It configures Logfire with `send_to_logfire='if-token-present'`, so nothing leaves your machine unless a token is configured, and exposes a `main()` function that emits a structured startup log and prints the greeting. Run `just run` (or `uv run python -m src.main`) to exercise the entry point.
