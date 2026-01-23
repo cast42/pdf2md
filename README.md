@@ -61,7 +61,7 @@ This project uses modern Python tooling:
 - **ruff**: Linting and formatting
 - **ty**: Type checking
 - **pytest**: Testing
-- **zensical**: Documentation
+- **zensical**: Documentation (mkdocstrings for API references)
 - **logfire**: Observability
 
 ### Available Commands

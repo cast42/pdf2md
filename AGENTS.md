@@ -22,7 +22,7 @@ Use the `justfile` to keep task automation consistent. Key recipes:
 - `just check`: Runs all pre-commit hooks against every file (Ruff, Ruff format, Ty, and hygiene hooks). Run before opening a PR or after dependency changes.
 - `just lint`, `just typing`: Individual quality gates when you need faster feedback.
 - `just test`: Executes `pytest` via `uv run -m pytest -q`.
-- `just docs`: Builds documentation with zensical (`uv run zensical build`); useful after updating docstrings.
+- `just docs`: Builds documentation with zensical (`uv run zensical build`).
 - `just run`: Launches the application entry point (`uv run python -m src.main`).
 - `just clean`: Clears caches (`.venv`, `.uv-cache`, `__pycache__`, etc.) when the environment misbehaves.
 - `just update`: Runs `uv lock --upgrade` to refresh dependency versions in `uv.lock`; follow with `just install` when you need to update the virtualenv.
@@ -31,7 +31,7 @@ All recipes inherit `.env` values because the `justfile` uses `set dotenv-load`.
 
 ## Code Quality Expectations
 
-- Maintain type hints and concise docstrings so zensical documentation stays up to date.
+- Maintain type hints and concise docstrings so mkdocstrings output stays up to date.
 - Prefer built-in collection types (`list`, `dict`, `set`, etc.) over legacy `typing` aliases.
 - Treat Ruff, Ty, and pytest warnings as failures; resolve them before finalizing work.
 

@@ -10,7 +10,7 @@ set positional-arguments
 # Convert a PDF file to Markdown using LightOnOCR-2-1B (e.g., just test.pdf)
 [no-cd]
 @pdf pdf_file:
-    uv run pdf2md "$1"
+    PYTHONPATH=src uv run pdf2md "$1"
 
 [group('qa')]
 test *args:
@@ -39,7 +39,7 @@ docs *args:
 
 # Run converts of pdf file as argument to markdown
 run *args:
-    uv run pdf2md {{args}}
+    PYTHONPATH=src uv run pdf2md {{args}}
 
 # Remove temporary files
 [group('lifecycle')]

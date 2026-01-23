@@ -12,14 +12,22 @@ nav = [
     { "Reference" = "reference.md" },
     { "Tests" = "tests.md" },
 ]
-plugins = [
-    "search",
-]
 markdown_extensions = [
     "fenced_code",
     { toc = { permalink = true } },
-    { mkdocstrings = { markdown_extensions = ["fenced_code", { toc = { permalink = true } }], handlers = { python = { paths = ["src", "."], options = { docstring_style = "google", members_order = "source", merge_init_into_class = true, separate_signature = true, show_root_heading = true, show_signature_annotations = true, show_source = false, show_symbol_type_heading = true } } } } },
 ]
+
+[project.plugins]
+search = {}
+
+[project.plugins.mkdocstrings.handlers.python]
+inventories = ["https://docs.python.org/3/objects.inv"]
+paths = ["src"]
+
+[project.plugins.mkdocstrings.handlers.python.options]
+docstring_style = "google"
+inherited_members = true
+show_source = false
 
 [project.theme]
 language = "en"
