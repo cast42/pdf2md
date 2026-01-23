@@ -19,6 +19,15 @@ Run the CLI with:
 uv run pdf2md path/to/document.pdf
 ```
 
+## Inference Backend
+
+The default backend offloads OCR to a Hugging Face Inference Endpoint. Set:
+
+- `HF_TOKEN`
+- `HF_ENDPOINT_URL` (preferred) or `HF_MODEL_ID`
+
+To run locally instead, install the `local` extra and set `PDF2MD_BACKEND=local`.
+
 ## Documentation
 
 - [API reference](reference.md) for modules, classes, and functions

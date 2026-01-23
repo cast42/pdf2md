@@ -5,13 +5,12 @@ description = "Convert PDF files to Markdown using LightOnOCR-2-1B"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "huggingface_hub>=1.3.2",
     "logfire>=4.16.0",
-    "torch>=2.0.0",
     "pillow>=10.0.0",
+    "pygments>=2.19.2",
     "pypdfium2>=4.0.0",
     "rich>=13.0.0",
-    "transformers @ git+https://github.com/huggingface/transformers",
-    "torchvision>=0.24.1",
 ]
 
 [project.scripts]
@@ -26,6 +25,13 @@ dev = [
     "pre-commit>=4.5.1",
     "mkdocstrings>=1.0.1",
     "mkdocstrings-python>=2.0.1",
+]
+
+[project.optional-dependencies]
+local = [
+    "torch>=2.0.0",
+    "torchvision>=0.24.1",
+    "transformers @ git+https://github.com/huggingface/transformers",
 ]
 
 [build-system]
@@ -44,3 +50,4 @@ ignore = ["E501"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
+markers = ["integration: requires Hugging Face credentials and endpoint access"]

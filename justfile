@@ -57,5 +57,9 @@ update:
 # Ensure project virtualenv is up to date
 [group('lifecycle')]
 install:
-    uv sync --dev
+    if [ "${PDF2MD_BACKEND:-}" = "local" ]; then \
+        uv sync --dev --extra local; \
+    else \
+        uv sync --dev; \
+    fi
     uv run pre-commit install

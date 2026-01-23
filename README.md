@@ -98,6 +98,40 @@ just typing
 
 ## Configuration
 
+### Hugging Face Inference Endpoint (Default)
+
+By default, pdf2md sends OCR requests to a Hugging Face Inference Endpoint.
+
+Quick setup:
+
+1. Create a Hugging Face access token with read scope.
+2. Choose either a hosted model (cheaper/free tier) or a dedicated endpoint.
+3. Export the environment variables below (or put them in `.env`).
+
+Required environment variables:
+
+- `HF_TOKEN`: Hugging Face access token
+- `HF_ENDPOINT_URL` (preferred) or `HF_MODEL_ID`
+
+Note: the hosted Inference API currently does not list image-to-text providers for most
+OCR models. If you see a 404 or “No inference provider is available” error, use a
+dedicated endpoint.
+
+Optional:
+
+- `PDF2MD_BACKEND=local` to run locally (requires `local` extra)
+- `HF_TIMEOUT_S` (default: 120)
+- `HF_RETRIES` (default: 4)
+
+To use the local backend:
+
+```sh
+uv sync --extra local
+PDF2MD_BACKEND=local uv run pdf2md input.pdf
+```
+
+For detailed setup (including the cheapest GPU options), see `docs/huggingface.md`.
+
 ### Logfire (Optional)
 
 To enable cloud logging with Logfire:
